@@ -1,4 +1,4 @@
-<img align="left" width="80" height="80" src="https://raw.githubusercontent.com/yngrdyn/keepit/main/public/img/logo.png" alt="Keep your expenses within a budget">
+<img align="left" width="80" height="80" src="https://raw.githubusercontent.com/yngrdyn/keepit/master/public/img/logo.png" alt="Keep your expenses within a budget">
 
 # keepit
 
