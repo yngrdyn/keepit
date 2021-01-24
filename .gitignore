@@ -1,0 +1,5 @@
+# Ignoring dependencies folders
+node_modules/
+
+# Ignoring compiled code
+public/build
