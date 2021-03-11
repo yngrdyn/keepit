@@ -1,4 +1,4 @@
-import { addExpense } from './Actions';
+import { addExpense, removeExpense, editExpense } from './Actions';
 import Store from './Store';
 
-export { addExpense, Store };
+export { addExpense, removeExpense, editExpense, Store };
