@@ -37,6 +37,31 @@ const expensesReducer = (state = initialState.expenses, action) => {
 
 const filtersReducer = (state = initialState.filters, action) => {
   switch (action.type) {
+    case actions.setTextFilter:
+      return {
+        ...state,
+        text: action.text,
+      };
+    case actions.sortByAmount:
+      return {
+        ...state,
+        sortBy: 'amount',
+      };
+    case actions.sortByDate:
+      return {
+        ...state,
+        sortBy: 'date',
+      };
+    case actions.setStartDate:
+      return {
+        ...state,
+        startDate: action.startDate,
+      }
+    case actions.setEndDate:
+      return {
+        ...state,
+        endDate: action.endDate,
+      }
     default:
       return state;
   }
