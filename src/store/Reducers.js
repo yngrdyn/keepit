@@ -5,7 +5,7 @@ const initialState = {
   expenses: [],
   filters: {
     text: '',
-    sortBy: undefined,
+    sortBy: 'date',
     startDate: undefined,
     endDate: undefined,
   },

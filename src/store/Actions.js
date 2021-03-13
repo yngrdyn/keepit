@@ -2,13 +2,13 @@ import { v4 as uuid } from 'uuid';
 
 const actions = {
   addExpense: 'ADD_EXPENSE',
-  removeExpense: 'REMOVE_EXPENSE',
   editExpense: 'EDIT_EXPENSE',
+  removeExpense: 'REMOVE_EXPENSE',
+  setEndDate: 'SET_END_DATE',
+  setStartDate: 'SET_START_DATE',
   setTextFilter: 'SET_TEXT_FILTER',
   sortByAmount: 'SORT_BY_AMOUNT',
   sortByDate: 'SORT_BY_DATE',
-  setStartDate: 'SET_START_DATE',
-  setEndDate: 'SET_END_DATE',
 }
 
 const addExpense = ({
@@ -61,4 +61,14 @@ const setEndDate = (endDate) => ({
   endDate,
 });
 
-export { actions, addExpense, removeExpense, editExpense, setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate };
+export {
+  actions,
+  addExpense,
+  editExpense,
+  removeExpense,
+  setEndDate,
+  setStartDate,
+  setTextFilter,
+  sortByAmount,
+  sortByDate,
+};

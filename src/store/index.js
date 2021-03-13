@@ -1,5 +1,16 @@
-import { addExpense, editExpense, removeExpense, setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate } from './Actions';
+import { addExpense, editExpense, removeExpense, setEndDate, setStartDate, setTextFilter, sortByAmount, sortByDate } from './Actions';
 import { getVisibleExpenses } from './Selectors';
 import Store from './Store';
 
-export { addExpense, removeExpense, editExpense, setTextFilter, sortByAmount, sortByDate, Store, setStartDate, setEndDate, getVisibleExpenses };
+export {
+  addExpense,
+  editExpense,
+  getVisibleExpenses,
+  removeExpense,
+  setEndDate,
+  setStartDate,
+  setTextFilter,
+  sortByAmount,
+  sortByDate,
+  Store,
+};
