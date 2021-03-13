@@ -20,12 +20,12 @@ const expenseTwo = store.dispatch(addExpense({ description: 'TESTING 2', amount:
 // store.dispatch(editExpense(expenseTwo.expense.id, {amount: 5400}))
 
 // store.dispatch(setTextFilter('rent'));
-store.dispatch(setTextFilter('2'));
+// store.dispatch(setTextFilter('2'));
 
-// store.dispatch(sortByAmount());
-// store.dispatch(sortByDate());
+store.dispatch(sortByAmount());
+store.dispatch(sortByDate());
 
-store.dispatch(setStartDate(25));
-store.dispatch(setEndDate(150));
+// store.dispatch(setStartDate(25));
+// store.dispatch(setEndDate(150));
 
 ReactDOM.render(<AppRouter/>, document.getElementById('root-app'));
