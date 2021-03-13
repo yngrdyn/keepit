@@ -1,10 +1,10 @@
 import 'normalize.css/normalize.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppRouter from './routers/AppRouter';
-import { addExpense, getVisibleExpenses, Store } from './store';
-import './styles/styles.scss';
 import { Provider } from 'react-redux';
+import AppRouter from './routers/AppRouter';
+import { addExpense, Store } from './store';
+import './styles/styles.scss';
 
 const store = Store();
 

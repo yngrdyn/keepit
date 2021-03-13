@@ -1,8 +1,9 @@
 import React from 'react';
-import { ExpenseList } from '../components';
+import { ExpenseList, Filters } from '../components';
 
 const DashboardPage = () => (
     <div title="keepit" subtitle="Keep your expenses within a budget">
+      <Filters/>
       <ExpenseList/>
     </div>
 );
