@@ -3,7 +3,7 @@ import { ExpenseList } from '../components';
 
 const DashboardPage = () => (
     <div title="keepit" subtitle="Keep your expenses within a budget">
-      <ExpenseList />
+      <ExpenseList/>
     </div>
 );
 
