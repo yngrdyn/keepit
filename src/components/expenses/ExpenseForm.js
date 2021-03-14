@@ -3,7 +3,6 @@ import React from 'react';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import { connect } from 'react-redux';
 
 class ExpenseForm extends React.Component {
   state = {
@@ -12,6 +11,7 @@ class ExpenseForm extends React.Component {
     note: '',
     createdAt: moment(),
     datePickerFocused: false,
+    error: '',
   };
 
   onDescriptionChange = (e) => {
@@ -26,47 +26,68 @@ class ExpenseForm extends React.Component {
 
   onAmountChange = (e) => {
     const amount = e.target.value;
-    if (amount.match(/^\d*(\.)?\d{0,2}$/)) {
+    if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
       this.setState(() => ({ amount }));
     }
   };
 
   onDateChange = (createdAt) => {
-    this.setState(() => ({ createdAt }));
+    if (createdAt){
+      this.setState(() => ({ createdAt }));
+    }
   };
 
   onFocusChange = ({ focused }) => {
     this.setState(() => ({ datePickerFocused: focused }));
   };
 
+  onSubmit = (e) => {
+    e.preventDefault();
+    if(!this.state.description || !this.state.amount) {
+      this.setState(() => ({ error: 'Please provide description and amount' }));
+    } else {
+      this.setState(() => ({ error: undefined }));
+      this.props.onSubmit({
+        description: this.state.description,
+        amount: parseFloat(this.state.amount, 10) * 100,
+        createdAt: this.state.createdAt.valueOf(),
+        note: this.state.note,
+      });
+    }
+  }
+
   render () {
     return (
-      <form>
-        <input
-          type='text'
-          placeholder='Description'
-          autoFocus
-          value={this.state.description}
-          onChange={this.onDescriptionChange}/>
-        <input
-          type='text'
-          placeholder='Amount'
-          value={this.state.amount}
-          onChange={this.onAmountChange}/>
-        <SingleDatePicker
-          date={this.state.createdAt}
-          onDateChange={this.onDateChange}
-          focused={this.state.datePickerFocused}
-          onFocusChange={this.onFocusChange}
-          numberOfMonths={1}
-          isOutsideRange={(_) => false}/>
-        <textarea
-          placeholder='Add a note for your expense(optional)'
-          value={this.state.note}
-          onChange={this.onNoteChange}/>
-        <button>Add expense</button>
-      </form>
+      <div>
+        {this.state.error &&
+          <span>{this.state.error}</span>}
+        <form onSubmit={this.onSubmit}>
+          <input
+            type='text'
+            placeholder='Description'
+            autoFocus
+            value={this.state.description}
+            onChange={this.onDescriptionChange}/>
+          <input
+            type='text'
+            placeholder='Amount'
+            value={this.state.amount}
+            onChange={this.onAmountChange}/>
+          <SingleDatePicker
+            date={this.state.createdAt}
+            onDateChange={this.onDateChange}
+            focused={this.state.datePickerFocused}
+            onFocusChange={this.onFocusChange}
+            numberOfMonths={1}
+            isOutsideRange={(_) => false}/>
+          <textarea
+            placeholder='Add a note for your expense(optional)'
+            value={this.state.note}
+            onChange={this.onNoteChange}/>
+          <button>Add expense</button>
+        </form>
+      </div>
   )};
 }
 
-export default connect()(ExpenseForm);
+export default ExpenseForm;
