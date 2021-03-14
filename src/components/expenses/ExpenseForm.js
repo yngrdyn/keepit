@@ -1,4 +1,8 @@
+import moment from 'moment';
 import React from 'react';
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
 import { connect } from 'react-redux';
 
 class ExpenseForm extends React.Component {
@@ -6,6 +10,8 @@ class ExpenseForm extends React.Component {
     description: '',
     amount: '',
     note: '',
+    createdAt: moment(),
+    datePickerFocused: false,
   };
 
   onDescriptionChange = (e) => {
@@ -25,6 +31,14 @@ class ExpenseForm extends React.Component {
     }
   };
 
+  onDateChange = (createdAt) => {
+    this.setState(() => ({ createdAt }));
+  };
+
+  onFocusChange = ({ focused }) => {
+    this.setState(() => ({ datePickerFocused: focused }));
+  };
+
   render () {
     return (
       <form>
@@ -39,6 +53,13 @@ class ExpenseForm extends React.Component {
           placeholder='Amount'
           value={this.state.amount}
           onChange={this.onAmountChange}/>
+        <SingleDatePicker
+          date={this.state.createdAt}
+          onDateChange={this.onDateChange}
+          focused={this.state.datePickerFocused}
+          onFocusChange={this.onFocusChange}
+          numberOfMonths={1}
+          isOutsideRange={(_) => false}/>
         <textarea
           placeholder='Add a note for your expense(optional)'
           value={this.state.note}
