@@ -1,4 +1,4 @@
-import { getVisibleExpenses } from '../../store';
+import { getVisibleExpenses } from './Selectors';
 import moment from 'moment';
 
 const expenses = [

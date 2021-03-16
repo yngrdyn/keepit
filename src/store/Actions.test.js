@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { actions, addExpense, editExpense, removeExpense, setEndDate, setStartDate, setTextFilter, sortByAmount, sortByDate } from '../../store';
+import { actions, addExpense, editExpense, removeExpense, setEndDate, setStartDate, setTextFilter, sortByAmount, sortByDate } from './Actions';
 
 describe('Expense actions', () => {
   it('should setup removeExpense action object', () => {
