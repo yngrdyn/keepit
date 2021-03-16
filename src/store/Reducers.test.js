@@ -1,29 +1,37 @@
 import reducers from './Reducers';
 import moment from 'moment';
 import { actions } from './Actions';
+import expenses from './fixtures/expenses';
 
 describe('Reducers', () => {
 
-  describe('Filters', () => {
-    it('should setup default filter values', () => {
-      // when
-      const state = reducers(undefined, { type: '@@INIT'});
-      // then
-      expect(state)
-        .toEqual({
-          expenses: [],
-          filters: {
-            text: '',
-            sortBy: 'date',
-            startDate: moment().startOf('month'),
-            endDate: moment().endOf('month'),
-          },
-        });
-    });
+  it('should setup default state', () => {
+    // when
+    const state = reducers(undefined, { type: '@@INIT'});
+    // then
+    expect(state)
+      .toEqual({
+        expenses: [],
+        filters: {
+          text: '',
+          sortBy: 'date',
+          startDate: moment().startOf('month'),
+          endDate: moment().endOf('month'),
+        },
+      });
+  });
 
+  describe('Filters', () => {
     it('should set sortBy to amount', () => {
+      // given
+      const currentState = {
+        expenses: [],
+        filters: {
+          sortBy: 'date',
+        },
+      };
       // when
-      const state = reducers(undefined, { type: actions.sortByAmount });
+      const state = reducers(currentState, { type: actions.sortByAmount });
       // then
       expect(state.filters.sortBy)
         .toBe('amount');
@@ -93,4 +101,74 @@ describe('Reducers', () => {
     });
   });
 
+  describe('Expenses', () => {
+    it('should remove expense by id', () => {
+      // given
+      const currentState = {
+        expenses,
+      }
+      // when
+      const state = reducers(currentState, { type: actions.removeExpense, id: expenses[1].id });
+      // then
+      expect(state.expenses)
+        .toEqual([
+          expenses[0],
+          expenses[2],
+        ]);
+    });
+
+    it('should not remove expense if id not found', () => {
+      // given
+      const currentState = {
+        expenses,
+      }
+      // when
+      const state = reducers(currentState, { type: actions.removeExpense, id: 'notExistingId' });
+      // then
+      expect(state.expenses)
+        .toEqual(expenses);
+    });
+
+    it('should add an expense', () => {
+      // given
+      const currentState = {
+        expenses,
+      }
+      const expense = {
+        id: 'myFancyId',
+        description: 'Laptop',
+      };
+      // when
+      const state = reducers(currentState, { type: actions.addExpense, expense });
+      // then
+      expect(state.expenses)
+        .toEqual([...expenses, expense]);
+    });
+
+    it('should edit an expense', () => {
+      // given
+      const currentState = {
+        expenses,
+      }
+      const amount = 1234567;
+      // when
+      const state = reducers(currentState, { type: actions.editExpense, id: expenses[1].id, updates: { amount } });
+      // then
+      expect(state.expenses[1].amount)
+        .toBe(amount);
+    });
+
+    it('should not edit an expense if id not found', () => {
+      // given
+      const currentState = {
+        expenses,
+      }
+      const amount = 1234567;
+      // when
+      const state = reducers(currentState, { type: actions.editExpense, id: 'notExistingId', updates: { amount } });
+      // then
+      expect(state.expenses)
+        .toEqual(expenses);
+    });
+  });
 });
