@@ -3,3 +3,6 @@ node_modules/
 
 # Ignoring compiled code
 public/build
+
+# Ignoring test snapshots
+*.test.js.snap
