@@ -1,7 +1,7 @@
 import reducers from './Reducers';
 import moment from 'moment';
 import { actions } from './Actions';
-import expenses from './fixtures/expenses';
+import expenses from '../fixtures/expenses';
 
 describe('Reducers', () => {
 

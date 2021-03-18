@@ -1,6 +1,6 @@
 import { getVisibleExpenses } from './Selectors';
 import moment from 'moment';
-import expenses from './fixtures/expenses';
+import expenses from '../fixtures/expenses';
 
 describe('Selectors', () => {
   it('should filter by text value', () => {
