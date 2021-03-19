@@ -1,5 +1,6 @@
 import 'normalize.css/normalize.css';
 import React from 'react';
+import 'react-dates/lib/css/_datepicker.css';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
