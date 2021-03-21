@@ -4,17 +4,17 @@ import { Filters } from './Filters';
 import { filters, altFilters } from '../../fixtures/filters.js';
 
 describe('EditExpensePage', () => {
-	let setTextFilters, sortByDate, sortByAmount, setStartDate, setEndDate, wrapper;
+	let setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate, wrapper;
 
 	beforeEach(() => {
-		setTextFilters = jest.fn();
+		setTextFilter = jest.fn();
 		sortByDate = jest.fn();
   	sortByAmount = jest.fn();
   	setStartDate = jest.fn();
   	setEndDate = jest.fn();
 		wrapper = shallow(
 			<Filters
-				setTextFilters={setTextFilters}
+				setTextFilter={setTextFilter}
 				sortByDate={sortByDate}
 				sortByAmount={sortByAmount}
 				setStartDate={setStartDate}
@@ -33,5 +33,59 @@ describe('EditExpensePage', () => {
 
 		expect(wrapper)
 			.toMatchSnapshot();
+	});
+
+	it('should handle text change', () => {
+		// given
+		const value = 'My fancy text';
+		// when
+		wrapper.find('input').simulate('change', { target: { value }});
+		// then
+		expect(setTextFilter)
+			.toHaveBeenCalledWith(value);
+	});
+
+	it('should sort by date', () => {
+		// given
+		wrapper.setProps({filters: altFilters});
+		const value = 'date';
+		// when
+		wrapper.find('select').simulate('change', { target: { value }});
+		// then
+		expect(sortByDate)
+			.toHaveBeenCalled();
+	});
+
+	it('should sort by amount', () => {
+		// given
+		const value = 'amount';
+		// when
+		wrapper.find('select').simulate('change', { target: { value }});
+		// then
+		expect(sortByAmount)
+			.toHaveBeenCalled();
+	});
+
+	it('should handle date changes', () => {
+		// given
+		const startDate = altFilters.startDate;
+		const endDate = altFilters.endDate;
+		// when
+		wrapper.find('withStyles(DateRangePicker)').prop('onDatesChange')({ startDate, endDate });
+		// then
+		expect(setStartDate)
+			.toHaveBeenCalledWith(startDate);
+		expect(setEndDate)
+			.toHaveBeenCalledWith(endDate);
+	});
+
+	it('should handle date focus changes', () => {
+		// given
+		const calendarFocused = 'endDate';
+		// when
+		wrapper.find('withStyles(DateRangePicker)').prop('onFocusChange')(calendarFocused);
+		// then
+		expect(wrapper.state('calendarFocused'))
+			.toBe(calendarFocused);
 	});
 });
