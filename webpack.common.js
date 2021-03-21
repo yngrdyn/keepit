@@ -1,4 +1,5 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src/app.js'),
@@ -7,6 +8,9 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: ''
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+  ],
   module: {
     rules: [
       {
@@ -28,10 +32,4 @@ module.exports = {
       }
     ]
   },
-  devtool: 'source-map',
-  devServer: {
-    contentBase: path.join(__dirname, '/public'),
-    publicPath: '/build',
-    historyApiFallback: true,
-  }
 }
