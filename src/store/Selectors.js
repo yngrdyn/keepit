@@ -17,4 +17,11 @@ const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
   })
 };
 
-export { getVisibleExpenses };
+const getExpensesTotal = (expenses) => expenses
+  .map((expense) => expense.amount)
+  .reduce(
+    (acc, curr) => acc + curr,
+    0,
+  );
+
+export { getVisibleExpenses, getExpensesTotal };
