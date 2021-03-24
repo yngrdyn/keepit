@@ -1,8 +1,9 @@
 import React from 'react';
-import { ExpenseList, Filters } from '../components';
+import { ExpenseList, ExpenseSummary, Filters } from '../components';
 
 const DashboardPage = () => (
     <div>
+      <ExpenseSummary />
       <Filters/>
       <ExpenseList/>
     </div>
