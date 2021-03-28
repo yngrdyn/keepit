@@ -6,3 +6,6 @@ public/build
 
 # Ignoring test snapshots
 *.test.js.snap
+
+#Ignoring .env variables
+.env
