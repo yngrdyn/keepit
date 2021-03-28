@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import database from '../firebase/firebase';
 
 const actions = {
   addExpense: 'ADD_EXPENSE',
@@ -11,21 +11,28 @@ const actions = {
   sortByDate: 'SORT_BY_DATE',
 }
 
-const addExpense = ({
-  description = '',
-  note = '',
-  amount = 0,
-  createdAt = 0,
-}) => ({
+const addExpense = (expense) => ({
   type: actions.addExpense,
-  expense: {
-    id: uuid(),
-    description,
-    note,
-    amount,
-    createdAt,
-  }
+  expense,
 });
+
+const startAddExpense = (expenseData = {}) => {
+  return (dispatch) => {
+    const {
+      description = '',
+      note = '',
+      amount = 0,
+      createdAt = 0,
+     } = expenseData;
+
+     const expense = { description, note, amount, createdAt };
+
+    database.ref('expenses').push(expense)
+      .then((ref) => {
+        dispatch(addExpense({...expense, id: ref.key}));
+      });
+  }
+};
 
 const removeExpense = ({id} = {}) => ({
   type: actions.removeExpense,
@@ -63,7 +70,7 @@ const setEndDate = (endDate) => ({
 
 export {
   actions,
-  addExpense,
+  startAddExpense as addExpense,
   editExpense,
   removeExpense,
   setEndDate,
