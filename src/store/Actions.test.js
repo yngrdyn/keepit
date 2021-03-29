@@ -1,5 +1,9 @@
 import moment from 'moment';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { actions, addExpense, editExpense, removeExpense, setEndDate, setStartDate, setTextFilter, sortByAmount, sortByDate } from './Actions';
+
+const createMockStore = configureMockStore([thunk]);
 
 describe('Actions', () => {
   describe('Expenses', () => {
@@ -30,45 +34,53 @@ describe('Actions', () => {
           updates,
         })
     });
-  
-    it('should setup addExpense action object with default values', () => {
+
+    it('should setup addExpense to database and store with default values', (done) => {
       // given
-      const expense = {};
-      // when
-      const action = addExpense(expense);
-      // then
-      expect(action)
-        .toEqual({
-          type: actions.addExpense,
-          expense: {
-            id: expect.any(String),
-            description: '',
-            note: '',
-            createdAt: 0,
-            amount: 0,
-          },
-        })
+      const store = createMockStore({});
+      const expenseData = {}
+      // when - then
+      store.dispatch(addExpense(expenseData))
+        .then(() => {
+          const dispatchedActions = store.getActions();
+          expect(dispatchedActions[0])
+            .toEqual({
+              type: actions.addExpense,
+              expense: {
+                id: expect.any(String),
+                amount: 0,
+                createdAt: 0,
+                description: '',
+                note: '',
+              },
+            })
+          done();
+        });
     });
-    
-    it('should setup addExpense action object with provided values', () => {
+  
+    it('should setup addExpense to database and store with provided values', (done) => {
       // given
-      const expense = {
+      const store = createMockStore({});
+      const expenseData = {
         description: 'My fancy description',
         amount: 12345,
         createdAt: 1000,
         note: 'My fancy note on the expense'
       };
-      // when
-      const action = addExpense(expense);
-      // then
-      expect(action)
-        .toEqual({
-          type: actions.addExpense,
-          expense: {
-            ...expense,
-            id: expect.any(String),
-          },
-        })
+      // when - then
+      store.dispatch(addExpense(expenseData))
+        .then(() => {
+          const dispatchedActions = store.getActions();
+          expect(dispatchedActions[0])
+            .toEqual({
+              type: actions.addExpense,
+              expense: {
+                id: expect.any(String),
+                ...expenseData,
+              },
+            })
+          done();
+        });
     });
   });
   
