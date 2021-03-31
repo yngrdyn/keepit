@@ -170,5 +170,17 @@ describe('Reducers', () => {
       expect(state.expenses)
         .toEqual(expenses);
     });
+
+    it('should set expenses', () => {
+      // given
+      const currentState = {
+        expenses: [expenses[0]],
+      }
+      // when
+      const state = reducers(currentState, { type: actions.setExpenses, expenses });
+      // then
+      expect(state.expenses)
+        .toEqual(expenses);
+    });
   });
 });

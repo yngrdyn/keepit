@@ -9,6 +9,11 @@ jest.mock('./src/firebase/firebase', () => {
         push: jest.fn(() => Promise.resolve({
           key: '',
         })),
-      })
+        once: jest.fn(() => Promise.resolve(
+          {
+            forEach: jest.fn(),
+          }
+        ),
+      )})
   };
 });

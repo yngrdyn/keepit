@@ -1,7 +1,7 @@
 import moment from 'moment';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { actions, addExpense, editExpense, removeExpense, setEndDate, setStartDate, setTextFilter, sortByAmount, sortByDate } from './Actions';
+import { actions, addExpense, editExpense, removeExpense, setEndDate, setExpenses, setStartDate, setTextFilter, sortByAmount, sortByDate } from './Actions';
 
 const createMockStore = configureMockStore([thunk]);
 
@@ -82,6 +82,22 @@ describe('Actions', () => {
                 id: expect.any(String),
                 ...expenseData,
               },
+            })
+          done();
+        });
+    });
+
+    it('should set expenses from firebase', (done) => {
+      // given
+      const store = createMockStore({});
+      // when - then
+      store.dispatch(setExpenses())
+        .then(() => {
+          const dispatchedActions = store.getActions();
+          expect(dispatchedActions[0])
+            .toEqual({
+              type: actions.setExpenses,
+              expenses: [],
             })
           done();
         });
