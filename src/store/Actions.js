@@ -4,6 +4,7 @@ const actions = {
   addExpense: 'ADD_EXPENSE',
   editExpense: 'EDIT_EXPENSE',
   removeExpense: 'REMOVE_EXPENSE',
+  setExpenses: 'SET_EXPENSES',
   setEndDate: 'SET_END_DATE',
   setStartDate: 'SET_START_DATE',
   setTextFilter: 'SET_TEXT_FILTER',
@@ -45,6 +46,29 @@ const editExpense = (id, updates) => ({
   updates,
 });
 
+const setExpenses = (expenses) => ({
+  type: actions.setExpenses,
+  expenses,
+});
+
+const startSetExpenses = () => {
+  return (dispatch) => {
+    return database.ref('expenses').once('value')
+      .then((snapshot) => {
+        const expenses = [];
+
+        snapshot.forEach((childSnapshot) => {
+          expenses.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val(),
+          })
+        });
+
+        dispatch(setExpenses(expenses));
+      });
+  };
+};
+
 const setTextFilter = (text = '') => ({
   type: actions.setTextFilter,
   text,
@@ -73,6 +97,7 @@ export {
   startAddExpense as addExpense,
   editExpense,
   removeExpense,
+  startSetExpenses as setExpenses,
   setEndDate,
   setStartDate,
   setTextFilter,
