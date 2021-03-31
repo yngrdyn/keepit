@@ -6,6 +6,10 @@ import { actions, addExpense, editExpense, removeExpense, setEndDate, setStartDa
 const createMockStore = configureMockStore([thunk]);
 
 describe('Actions', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('Expenses', () => {
     it('should setup removeExpense action object', () => {
       // given
